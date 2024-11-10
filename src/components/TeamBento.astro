@@ -1,0 +1,19 @@
+---
+import TeamCard from './TeamCard.astro';
+import { teams } from '../data/teams';
+---
+<section class="bento-grid">
+  {teams.map((team) => (
+    <TeamCard name={team.name} bgImageUrl={team.image} teamUrl={`/teams/${team.slug}`} slug />  
+  ))}
+</section>
+
+<style>
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-content: center;
+    padding: 2rem;
+  }
+</style>
