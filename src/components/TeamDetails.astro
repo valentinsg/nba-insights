@@ -1,0 +1,148 @@
+---
+// TeamDetails.astro
+import { teams } from '../data/teams';
+import trophyImage from '../images/trophy.png';
+
+const { slug } = Astro.params;
+const team = teams.find(t => t.slug === slug);
+---
+
+<section class="team-details">
+  {team ? (
+    <>
+      <h1 class="team-name">{team.name}</h1>
+      <img src={team.courtImage} alt={`Court of ${team.name}`} class="team-court" />
+
+      <div class="team-stats">
+        <div class="bento-box">
+          <p><strong>Ciudad:</strong> {team.city}</p>
+        </div>
+        <div class="bento-box">
+          <p><strong>Propietario:</strong> {team.owner}</p>
+        </div>
+        <div class="bento-box trophies">
+          <strong>Títulos:</strong>
+          <div class="trophies-container">
+            {Array.from({ length: team.titles }, (_, i) => (
+              <img src={trophyImage.src} alt="Trophy icon" class="trophy" />
+            ))}
+          </div>
+          <p class="trophy-count">x{team.titles}</p>
+        </div>
+        <div class="bento-box">
+          <p><strong>Playoffs:</strong> {team.playoffAppearances}</p>
+        </div>
+        <div class="bento-box">
+          <p><strong>Estadio:</strong> {team.stadiumCapacity} espectadores</p>
+        </div>
+        <div class="bento-box">
+          <p><strong>Números Retirados:</strong> {team.retiredNumbers?.join(', ')}</p>
+        </div>
+        <div class="bento-box">
+          <p><strong>Colores:</strong> {team.colors?.join(', ')}</p>
+        </div>
+      </div>
+
+      <section class="historical-kits">
+        <h2>Equipaciones</h2>
+        <!-- Aquí puedes añadir la galería de equipaciones -->
+      </section>
+    </>
+  ) : (
+    <p>Team not found</p>
+  )}
+</section>
+<style>
+  /* Estilo general del contenedor */
+  .team-details {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .team-name {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: #e63946; /* Color rojo vibrante */
+    text-align: center;
+    font-family: 'Impact', sans-serif; /* Fuente más atrevida */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .team-court {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .team-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Estilo de los bentos */
+  .bento-box {
+    background-color: #2b2b2b; /* Fondo oscuro */
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #e0e0e0; /* Texto claro */
+    font-family: 'Courier New', monospace; /* Fuente tipo graffiti */
+    border: 2px solid #444;
+    transition: transform 0.2s ease;
+  }
+
+  .bento-box:hover {
+    transform: scale(1.05);
+    background-color: #3a3a3a;
+    border-color: #e63946;
+  }
+
+  .trophies {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .trophies-container {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .trophy {
+    width: 24px;
+    height: auto;
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+  }
+
+  .trophy-count {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 0.2rem;
+  }
+
+  /* Equipaciones */
+  .historical-kits {
+    margin-top: 2rem;
+  }
+
+  .historical-kits h2 {
+    text-align: center;
+    font-size: 1.7rem;
+    color: #e63946;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-family: 'Impact', sans-serif;
+  }
+</style>
